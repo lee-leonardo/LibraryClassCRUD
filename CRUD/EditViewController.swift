@@ -9,7 +9,7 @@
 import UIKit
 
 protocol EditViewDelegate {
-	func addItem ( editItemViewController: EditViewController, item: Book, indexPath: Int? )
+	func addItem ( editItemViewController: EditViewController, item: Book, indexPath: Int )
 	func cancel( editItemViewController: EditViewController )
 }
 
@@ -18,10 +18,14 @@ class EditViewController: UIViewController {
 	@IBOutlet var textField: UITextField
 	@IBOutlet var doneButton: UIButton
 	
+//Optionals to avoid initialization.
 	var book: Book?
 	var indexPath: Int?
+	
+//Delegate variable for the protocol.
 	var delegate: EditViewDelegate?
 
+//	These methods get the data based on, the fall through was some code that I thought about using.
 	var viewControllerTitle: String {
 	get {
 		if book {
@@ -53,14 +57,11 @@ class EditViewController: UIViewController {
 		self.textField.becomeFirstResponder()
 	}
 	
+//	This is the implementation for the buttons, which are used to communicate with the delegate.
 	@IBAction func finishEditing(sender: AnyObject) {
 		var newBook = Book(bookName: textField.text)
+		self.delegate?.addItem(self, item: newBook, indexPath: indexPath!)
 		
-		if indexPath {
-			self.delegate?.addItem(self, item: newBook, indexPath: indexPath!)
-		} else {
-			self.delegate?.addItem(self, item: newBook, indexPath:nil)
-		}
 	}
 	@IBAction func cancel(sender: AnyObject) {
 		self.delegate?.cancel(self)

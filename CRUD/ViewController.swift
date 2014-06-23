@@ -15,10 +15,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 	
 	struct segueID {
 		let edit: String = "ToEdit"
-		let newItem = "ToNew"
 	}
 	
-                            
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.title = "Booklist"
@@ -34,11 +32,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 		booklist.append(Book(bookName: "Javascript Ninja"))
 		booklist.append(Book(bookName: "Twentieth Century Music"))
 		booklist.append(Book(bookName: "Tao Te Ching"))
-
 		
-//		for book in booklist {
-//			println("\(book.title)")
-//		}
+		/* //Primarily just for testing.
+		for book in booklist {
+			println("\(book.title)")
+		}
+		*/
 		
 	}
 	
@@ -53,40 +52,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 	func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
 		return booklist.count
 	}
-	//	#pragma mark - Sending data to delegate
-//	@optional func tableView(_ tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
-//		var object = booklist[indexPath.row]
-////		self.delegate.book = object
-//	}
-//	@optional func tableView(_ tableView: UITableView!, canMoveRowAtIndexPath indexPath: NSIndexPath!) -> Bool {
-//		
-//	}
-	
 
-//	#pragma mark - TableView functions
-//	Use this function until you find out how to make a VC that you can used with segues.
+//	#pragma mark - Function to add Cells.
 	@IBAction func addCell(sender: AnyObject) {
 		var book = Book(bookName: "\"Placeholder\"")
 		booklist.append(book)
 		booklistTableView.reloadData()
 	}
 	
-//	#pragma mark - Editing
+//	#pragma mark - Editing the TableView
 	@IBAction func editList(sender: AnyObject) {
-		
-//		This needs to work within an update block....
+		//This needs to work within an update block....
 		booklistTableView.setEditing(!booklistTableView.editing, animated: true)
 	}
 	override func setEditing(editing: Bool, animated: Bool) {
 		super.setEditing(editing, animated: animated)
 		booklistTableView.setEditing(editing, animated: true)
-//		Needed?
-//		if editing {
-//			
-//		} esle {
-//			
-//		}
+
 	}
+	
+//	Disclaimer: A bit confused why these didn't work with the @optional in front of them...
 	func tableView(tableView: UITableView!, editingStyleForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCellEditingStyle {
 			return UITableViewCellEditingStyle.Delete
 	}
@@ -111,18 +96,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 		}
 	}
 	
-	func addItem( editItemViewController: EditViewController, item: Book, indexPath: Int? ) {
-		
-		if indexPath {
-			booklist.removeAtIndex(indexPath!)
-			booklist.insert(item, atIndex: indexPath!)
-		} else {
-			booklist.append(item)
-		}
+//EditViewDelegate functions, cancel, just dismisses the view. addItem actually replaces the item at the index.
+	func addItem( editItemViewController: EditViewController, item: Book, indexPath: Int ) {
+		booklist[indexPath] = item
 		
 		self.dismissViewControllerAnimated(true, completion: nil)
 		booklistTableView.reloadData()
 	}
+	
 	func cancel(editItemViewController: EditViewController) {
 		self.dismissViewControllerAnimated(true, completion: nil)
 	}
