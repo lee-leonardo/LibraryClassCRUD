@@ -14,4 +14,7 @@ class Book {
 	init( bookName: String ) {
 		self.title = bookName
 	}
+	convenience init() {
+		self.init( bookName: "\"Placeholder\"" )
+	}
 }

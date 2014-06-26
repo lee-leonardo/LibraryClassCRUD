@@ -21,10 +21,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 		super.viewDidLoad()
 		self.title = "Booklist"
 
-		CRUDlist()
+		buildBooklist()
 		
 	}
-	func CRUDlist() {
+	func buildBooklist() {
 		booklist.append(Book(bookName: "Mahabharata"))
 		booklist.append(Book(bookName: "Pride and Prejudice"))
 		booklist.append(Book(bookName: "Tractatus Logico Philosophicus"))
@@ -55,7 +55,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
 //	#pragma mark - Function to add Cells.
 	@IBAction func addCell(sender: AnyObject) {
-		var book = Book(bookName: "\"Placeholder\"")
+		var book = Book()
 		booklist.append(book)
 		booklistTableView.reloadData()
 	}
